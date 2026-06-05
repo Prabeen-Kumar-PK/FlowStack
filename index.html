@@ -15,35 +15,89 @@
           <img src="./FlowStack .svg" alt="" srcset="" />
         </div>
         <div class="right">
-          <button>Add New Task</button>
+          <button id="toggle-modal">Add New Task</button>
         </div>
       </nav>
       <section class="board">
-        <div class="task-column">
+        <div id="todo" class="task-column">
           <div class="heading">
             <div class="left">To Do</div>
-            <div class="right">Count</div>
+            <div class="right"><span id="todo-heading-count">1</span></div>
           </div>
-          <div class="task">
-            <h2>Task 1</h2>
-            <p>Description for Task 1</p>
-            <button>Delete</button>
-          </div>
+          
         </div>
-        <div class="task-column">
+        <div id="progress" class="task-column">
           <div class="heading">
             <div class="left">In Progress</div>
-            <div class="right">Count</div>
+            <div class="right"><span id="progress-heading-count">0</span></div>
           </div>
         </div>
-        <div class="task-column">
+        <div id="done" class="task-column">
           <div class="heading">
             <div class="left">Done</div>
-            <div class="right">Count</div>
+            <div class="right"><span id="done-heading-count">0</span></div>
           </div>
         </div>
       </section>
+      <section class="map">
+        <div class="heatmap-card card">
+          <div class="card-title">Progress Heatmap</div>
+          <div class="heat-grid" id="heat-grid"></div>
+          <p class="heatmap-note">Task squares are colored by status: todo=#cacaca, in progress=#ff0000, done=#0000ff.</p>
+        </div>
+        <div class="facts-card card">
+          <div class="card-title">World Facts</div>
+          <p class="facts-note">A rotating world fact updates every 5 seconds. One side shows an image and the other side displays the text.</p>
+          <div class="fact-slider" id="fact-slider">
+            <div class="fact-image" id="fact-image"></div>
+            <div class="fact-text">
+              <div class="fact-count" id="fact-count"></div>
+              <div class="fact-title" id="fact-title"></div>
+              <p class="fact-description" id="fact-description"></p>
+            </div>
+          </div>
+        </div>
+        <div class="pending-card card">
+          <div class="card-title">Pending Tasks</div>
+          <div class="pending-summary" id="pending-summary"></div>
+          <ul class="pending-list" id="pending-list"></ul>
+        </div>
+      </section>
     </main>
+
+    <div class="modal add-new-task">
+      <div class="bg"></div>
+      <div class="center">
+        <input 
+          id="task-title-input"
+          type="text" 
+          placeholder="Task Title"
+          required="true"
+         />
+         
+        <textarea
+          id="task-description-input"
+          placeholder="Task Description"
+        ></textarea>
+
+        <button id="add-new-task" class="add-task-btn">Add Task</button>
+      </div>
+    </div>
+    <div class="modal heatmap-detail-modal" id="heatmap-detail-modal">
+      <div class="bg"></div>
+      <div class="center">
+        <div class="detail-header">
+          <h2>Heatmap details</h2>
+          <button class="close-detail">Close</button>
+        </div>
+        <div class="detail-summary" id="detail-summary"></div>
+        <div class="detail-task-grid" id="detail-task-grid"></div>
+        <div class="detail-animal" id="detail-animal">
+          <img alt="Animal" id="detail-animal-img" />
+          <div class="detail-animal-text" id="detail-animal-text"></div>
+        </div>
+      </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>

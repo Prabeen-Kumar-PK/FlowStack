@@ -1,29 +1,48 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,body{
+html,
+body {
     width: 100%;
     height: 100%;
-    
+
 }
 
-:root{
-    --bg-color:#000000;
-    --bg-button-color:#FF0000;
-    --section-bg-color:#171717;
+:root {
+    --bg-color: #000000;
+    --bg-button-color: #fad9d9;
+    --section-bg-color: #171717;
+    --bg-task-color: #4d4c4c;
     --primary-text-color: #f4f4f4;
-
+    --delete-color: #ff2727;
+    --card-border: rgba(255,255,255,0.08);
+    --surface-border: rgba(255,255,255,0.1);
+    --surface-border-strong: rgba(255,255,255,0.2);
+    --surface-divider: rgba(255,255,255,0.08);
+    --surface-strong: rgba(255,255,255,0.05);
+    --surface-muted: rgba(255,255,255,0.04);
+    --surface-weak: rgba(255,255,255,0.03);
+    --modal-overlay: #22000071;
+    --muted-text: #bbbbbb;
+    --subtle-text: #999999;
+    --text-light: #dddddd;
+    --text-white: #ffffff;
+    --heat-square-bg: rgba(255,255,255,0.08);
+    --heat-square-todo: #6f6f6f;
+    --heat-square-progress: #fb5e2a;
+    --heat-square-done: #6bfd63;
+  
     /* Padding Variables */
     --nav-padding: 1rem 2rem;
     --section-padding: 1rem 2rem;
-    --padding-s:0.5rem;
-    --padding-m:0.9rem;
-    --padding-l:1rem;
-    --padding-xl:1.3rem;
-    --padding-xxl:2rem;
+    --padding-s: 0.5rem;
+    --padding-m: 0.9rem;
+    --padding-l: 1rem;
+    --padding-xl: 1.3rem;
+    --padding-xxl: 2rem;
 
     /* border radius variables */
     --border-radius-s: .2rem;
@@ -33,72 +52,431 @@ html,body{
     --border-radius-xxl: 2rem;
 }
 
-html{
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
 
 
-body{
+body {
     background-color: var(--bg-color);
-    color:var(--primary-text-color);
+    color: var(--primary-text-color);
 }
-main{
+
+main {
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-nav{
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: var(--nav-padding);
 }
 
-nav button{
-    padding:var(--padding-s) var(--padding-m);
-    background-color:var(--bg-button-color);
-    color: var(--primary-text-color);
-    border:none;
-    outline:none;
+button {
+    padding: var(--padding-s) var(--padding-m);
+    background-color: var(--bg-button-color);
+    color: var(--bg-color);
+    border: none;
+    outline: none;
     cursor: pointer;
     border-radius: var(--border-radius-l);
     font-size: 1rem;
-    transition:all 0.3s ease;
+    transition: all 0.3s ease;
     font-weight: 400;
 }
 
-nav button:hover{
+button:hover {
     background-color: var(--primary-text-color);
     color: var(--bg-color);
+    scale: 1.05;
 }
 
-.left img{
+.left img {
     height: 2vw;
 }
 
-section{
-    padding:var(--section-padding);
+section {
+    padding: var(--section-padding);
     display: flex;
-    flex-grow:1;
-    gap:var(--padding-xxl);
+    flex-grow: 1;
+    gap: var(--padding-xxl);
     justify-content: space-between;
-  
+
 }
 
-.task-column{
+.task-column {
     background: var(--section-bg-color);
     display: flex;
     flex-direction: column;
-    flex-grow:1;
-    
-  
+    flex-grow: 1;
+    gap: var(--padding-l);
+    padding: var(--padding-m);
+    border-radius: var(--border-radius-s);
+    cursor: grab;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .3s;
 }
 
-.task-column .heading{
+section .task-column.hover-over {
+    border: 2px dashed var(--primary-text-color);
+    scale: 1.02;
+}
+
+.task-column .heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+
+}
+
+section .task-column .task {
+    background: var(--bg-task-color);
+    padding: var(--padding-m);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: var(--border-radius-m);
+    cursor: grab;
+}
+
+section .task-column .task button {
+    align-self: flex-end;
+    cursor: pointer;
+    padding: var(--padding-s) var(--padding-m);
+    border: none;
+    outline: none;
+    border-radius: var(--border-radius-s);
+    background-color: var(--delete-color);
+    color: var(--primary-text-color);
+}
+
+.task-column .task h2{
+    text-transform: uppercase;
+}
+
+.map {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--padding-m);
+    align-items: start;
+}
+
+.card {
+    background-color: var(--section-bg-color);
+    border-radius: var(--border-radius-m);
+    padding: var(--padding-m);
+    border: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);
+}
+
+.heatmap-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.heatmap-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--surface-border-strong);
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.heat-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.heat-square {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 0.35rem;
+    background-color: var(--heat-square-bg);
+    transition: background-color 0.2s ease;
+}
+
+.heat-square.todo.active {
+    background-color: var(--heat-square-todo);
+}
+
+.heat-square.progress.active {
+    background-color: var(--heat-square-progress);
+}
+
+.heat-square.done.active {
+    background-color: var(--heat-square-done);
+}
+
+.heatmap-note,
+.facts-note {
+    color: var(--muted-text);
+    font-size: 0.9rem;
+}
+
+.facts-note {
+    margin: 0 0 1rem;
+}
+
+.fact-slider {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    min-height: 200px;
+    align-items: stretch;
+    transition: all ease 1.5s;
+}
+
+.fact-image {
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--border-radius-m);
+    min-height: 200px;
+    box-shadow: inset 0 0 0 1px var(--card-border);
+     transition: all ease 1.5s;
+}
+
+.fact-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--surface-weak);
+    border-radius: var(--border-radius-m);
+    min-height: 200px;
+     transition: all ease 1.5s;
+}
+
+.fact-count {
+    font-size: 0.8rem;
+    color: var(--subtle-text);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.fact-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-white);
+     transition: all ease 1.5s;
+}
+
+.fact-description {
+    margin: 0;
+    color: var(--text-light);
+    line-height: 1.6;
+     transition: all ease 1.5s;
+}
+
+@media (max-width: 900px) {
+    .fact-slider {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.pending-summary {
+    font-size: 0.95rem;
+    color: var(--muted-text);
+}
+
+.pending-list {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.pending-list li {
+    padding: var(--padding-s) var(--padding-m);
+    background-color: var(--surface-muted);
+    border-radius: var(--border-radius-s);
+}
+
+.pending-list li.empty {
+    color: var(--subtle-text);
+    font-style: italic;
+}
+
+.modal {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active{
+    display: flex;
+}
+
+.modal .bg{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: var(--modal-overlay);
+    backdrop-filter: blur(var(--padding-l));
+}
+
+.modal .center {
+    background-color: var(--section-bg-color);
+    padding: var(--padding-xxl);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    gap: var(--padding-s);
+    border-radius: var(--border-radius-l);
+}
+
+.modal .center input,
+.modal .center textarea {
+    background-color: var(--bg-task-color);
+    border: none;
+    outline: none;
+    color:var(--primary-text-color);
     padding:var(--padding-m);
+    border-radius: var(--border-radius-s);
+}
+
+.modal .center button{
+    border-radius: var(--border-radius-s);
+    align-self: center;
+}
+
+.heatmap-detail-modal .center {
+    max-width: 560px;
+    width: min(100%, 560px);
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--padding-m);
+}
+
+.detail-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.close-detail {
+    padding: var(--padding-s) var(--padding-m);
+    background-color: var(--bg-button-color);
+    color: var(--bg-color);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius-s);
+}
+
+.detail-summary {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.detail-task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+    gap: 0.4rem;
+}
+
+.detail-square {
+    width: 20px;
+    height: 20px;
+    border-radius: 0.2rem;
+    border: 1px solid var(--surface-border);
+}
+
+.detail-animal {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--padding-m);
+    margin-top: var(--padding-m);
+    padding-top: var(--padding-m);
+    border-top: 1px solid var(--surface-divider);
+}
+
+.detail-animal img {
+    width: 80px;
+    height: 80px;
+    border-radius: 0.75rem;
+    object-fit: cover;
+    border: 1px solid var(--surface-border);
+}
+
+.detail-animal-text {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.detail-square.todo {
+    background-color: var(--heat-square-todo);
+}
+
+.detail-square.progress {
+    background-color: var(--heat-square-progress);
+}
+
+.detail-square.done {
+    background-color: var(--heat-square-done);
+}
+
+@media (max-width: 768px) {
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 999;
+        backdrop-filter: blur(10px);
+    }
+
+    nav .left img{
+       height: 7vw;
+    }
+
+    main {
+        padding-top: calc(3.5rem + var(--padding-s));
+    }
+
+    section {
+        flex-direction: column;
+        gap: var(--padding-m);
+    }
+
+    .board,
+    .map {
+        width: 100%;
+    }
+
+    .task-column {
+        width: 100%;
+        min-height: 50vh;
+    }
+
+    .map {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--padding-m);
+    }
+
+    .map .card {
+        width: 100%;
+        min-height: 50vh;
+    }
 }
